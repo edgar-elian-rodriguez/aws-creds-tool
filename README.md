@@ -23,6 +23,20 @@ When Multi-Factor Authentication (MFA) is enabled on an AWS account, using the A
 
 ## Installation
 
+### Quick Install (Recommended)
+
+Install with a single command without needing Go installed:
+
+**macOS / Linux:**
+```bash
+curl -fsSL https://raw.githubusercontent.com/Elian-Rodriguez-Dev/aws-creds-tool/main/install.sh | bash
+```
+
+**Windows (PowerShell):**
+```powershell
+iwr https://raw.githubusercontent.com/Elian-Rodriguez-Dev/aws-creds-tool/main/install.ps1 | iex
+```
+
 ### From GitHub Releases
 1. Go to the [Releases](https://github.com/Elian-Rodriguez-Dev/aws-creds-tool/releases) page.
 2. Download the archive for your operating system and architecture.
