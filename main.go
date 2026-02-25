@@ -1,6 +1,6 @@
 package main
 
-import 	"github.com/roded/aws-creds-tool/cmd"
+import 	"github.com/Elian-Rodriguez-Dev/aws-creds-tool/cmd"
 
 func main() {
 	cmd.Execute()

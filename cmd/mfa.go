@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/roded/aws-creds-tool/pkg/awsclient"
-	"github.com/roded/aws-creds-tool/pkg/ux"
+	"github.com/Elian-Rodriguez-Dev/aws-creds-tool/pkg/awsclient"
+	"github.com/Elian-Rodriguez-Dev/aws-creds-tool/pkg/ux"
 	"github.com/spf13/cobra"
 )
 
