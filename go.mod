@@ -1,4 +1,4 @@
-module github.com/Elian-Rodriguez-Dev/aws-creds-tool
+module github.com/edgar-elian-rodriguez/aws-creds-tool
 
 go 1.25.0
 

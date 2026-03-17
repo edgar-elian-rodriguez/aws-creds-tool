@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/Elian-Rodriguez-Dev/aws-creds-tool/pkg/awsclient"
+	"github.com/edgar-elian-rodriguez/aws-creds-tool/pkg/awsclient"
 	"github.com/spf13/cobra"
 )
 

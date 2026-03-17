@@ -1,5 +1,7 @@
 # AWS Credential Administrator (`aws-creds-tool`)
 
+[![CI](https://github.com/edgar-elian-rodriguez/aws-creds-tool/actions/workflows/ci.yml/badge.svg)](https://github.com/edgar-elian-rodriguez/aws-creds-tool/actions/workflows/ci.yml)
+
 A multi-platform Go CLI for managing your local AWS profiles and generating temporary MFA session tokens.
 
 ## Why this tool?
@@ -28,14 +30,14 @@ When Multi-Factor Authentication (MFA) is enabled on an AWS account, using the A
 Requires [Go](https://go.dev/dl/) 1.25 or later:
 
 ```bash
-go install github.com/Elian-Rodriguez-Dev/aws-creds-tool@latest
+go install github.com/edgar-elian-rodriguez/aws-creds-tool@latest
 ```
 
 The binary is placed in `$GOPATH/bin` (usually `~/go/bin`). Make sure that directory is on your `PATH`.
 
 ### From GitHub Releases
 
-Pre-built binaries for Windows, macOS, and Linux are available on the [Releases](https://github.com/Elian-Rodriguez-Dev/aws-creds-tool/releases) page.
+Pre-built binaries for Windows, macOS, and Linux are available on the [Releases](https://github.com/edgar-elian-rodriguez/aws-creds-tool/releases) page.
 
 1. Download the archive for your OS and architecture.
 2. Extract the binary and place it in a directory on your `PATH`.
