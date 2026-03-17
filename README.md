@@ -23,32 +23,24 @@ When Multi-Factor Authentication (MFA) is enabled on an AWS account, using the A
 
 ## Installation
 
-### Quick Install (Recommended)
+### Using `go install` (Recommended)
 
-Install with a single command without needing Go installed:
+Requires [Go](https://go.dev/dl/) 1.25 or later:
 
-**macOS / Linux:**
-```bash
-curl -fsSL https://raw.githubusercontent.com/Elian-Rodriguez-Dev/aws-creds-tool/main/install.sh | bash
-```
-
-**Windows (PowerShell):**
-```powershell
-iwr https://raw.githubusercontent.com/Elian-Rodriguez-Dev/aws-creds-tool/main/install.ps1 | iex
-```
-
-### From GitHub Releases
-1. Go to the [Releases](https://github.com/Elian-Rodriguez-Dev/aws-creds-tool/releases) page.
-2. Download the archive for your operating system and architecture.
-3. Extract the binary and move it to a folder in your `PATH`.
-   - **Linux/macOS:** `/usr/local/bin` is a common choice.
-   - **Windows:** You can add a custom folder to your System Environment Variables.
-
-### Using `go install`
-If you have Go installed, you can install it directly:
 ```bash
 go install github.com/Elian-Rodriguez-Dev/aws-creds-tool@latest
 ```
+
+The binary is placed in `$GOPATH/bin` (usually `~/go/bin`). Make sure that directory is on your `PATH`.
+
+### From GitHub Releases
+
+Pre-built binaries for Windows, macOS, and Linux are available on the [Releases](https://github.com/Elian-Rodriguez-Dev/aws-creds-tool/releases) page.
+
+1. Download the archive for your OS and architecture.
+2. Extract the binary and place it in a directory on your `PATH`.
+   - **Linux/macOS:** `/usr/local/bin` is a common choice.
+   - **Windows:** Add the directory to your User or System Environment Variables.
 
 ## Usage
 Once installed, you can call the tool from your command shell:
