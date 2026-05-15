@@ -42,7 +42,48 @@ Pre-built binaries for Windows, macOS, and Linux are available on the [Releases]
 1. Download the archive for your OS and architecture.
 2. Extract the binary and place it in a directory on your `PATH`.
    - **Linux/macOS:** `/usr/local/bin` is a common choice.
-   - **Windows:** Add the directory to your User or System Environment Variables.
+   - **Windows:** add the directory to your User or System Environment Variables.
+
+#### Linux packages
+Each release also publishes Debian and Red Hat package artifacts.
+
+- Debian:
+  ```bash
+  sudo dpkg -i aws-creds-tool_<version>_amd64.deb
+  ```
+- Red Hat:
+  ```bash
+  sudo rpm -i aws-creds-tool-<version>.rpm
+  ```
+
+#### Install scripts
+A quick way to install on Linux or macOS is the included shell installer:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/edgar-elian-rodriguez/aws-creds-tool/main/scripts/install.sh | bash
+```
+
+For Windows, use the PowerShell installer script:
+
+```powershell
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/edgar-elian-rodriguez/aws-creds-tool/main/scripts/install.ps1" -OutFile "$env:TEMP\install.ps1"
+pwsh $env:TEMP\install.ps1
+```
+
+#### Homebrew
+A Homebrew tap exists at `edgar-elian-rodriguez/homebrew-tap`. Once the formula is published, install with:
+
+```bash
+brew install edgar-elian-rodriguez/tap/aws-creds-tool
+```
+
+#### Scoop
+A Scoop bucket exists at `edgar-elian-rodriguez/scoop-bucket`. Once the manifest is published, install with:
+
+```powershell
+scoop bucket add aws-creds-tool https://github.com/edgar-elian-rodriguez/scoop-bucket
+scoop install aws-creds-tool
+```
 
 ## Usage
 Once installed, you can call the tool from your command shell:

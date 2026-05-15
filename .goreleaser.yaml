@@ -31,6 +31,33 @@ archives:
       - goos: windows
         format: zip
 
+nfpms:
+  - id: aws-creds-tool-deb
+    packager: deb
+    formats:
+      - deb
+    name: aws-creds-tool
+    license: MIT
+    homepage: https://github.com/edgar-elian-rodriguez/aws-creds-tool
+    description: "AWS Credential Administrator"
+    maintainer: "edgar-elian-rodriguez"
+    vendor: "edgar-elian-rodriguez"
+    section: utils
+    builds:
+      - aws-creds-tool
+  - id: aws-creds-tool-rpm
+    packager: rpm
+    formats:
+      - rpm
+    name: aws-creds-tool
+    license: MIT
+    homepage: https://github.com/edgar-elian-rodriguez/aws-creds-tool
+    description: "AWS Credential Administrator"
+    maintainer: "edgar-elian-rodriguez"
+    vendor: "edgar-elian-rodriguez"
+    builds:
+      - aws-creds-tool
+
 checksum:
   name_template: 'checksums.txt'
 

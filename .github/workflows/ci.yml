@@ -28,6 +28,14 @@ jobs:
           go mod tidy
           git diff --exit-code go.mod go.sum
 
+      - name: Run GoReleaser check
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          version: latest
+          args: check --config .goreleaser.yaml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Vet
         run: go vet ./...
 
