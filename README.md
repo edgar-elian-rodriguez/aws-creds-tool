@@ -42,7 +42,7 @@ Pre-built binaries for Windows, macOS, and Linux are available on the [Releases]
 1. Download the archive for your OS and architecture.
 2. Extract the binary and place it in a directory on your `PATH`.
    - **Linux/macOS:** `/usr/local/bin` is a common choice.
-   - **Windows:** add the directory to your User or System Environment Variables.
+  - **Windows:** run `install.ps1` from the extracted archive to copy `aws-creds-tool.exe` into `%LOCALAPPDATA%\Programs\aws-creds-tool`, or place the binary manually in a directory on your `PATH`.
 
 #### Linux packages
 Each release also publishes Debian and Red Hat package artifacts.

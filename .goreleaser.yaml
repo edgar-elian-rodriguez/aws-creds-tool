@@ -20,6 +20,9 @@ builds:
 archives:
   - formats:
       - tar.gz
+    files:
+      - src: scripts/install{{ if eq .Os "windows" }}.ps1{{ end }}{{ if ne .Os "windows" }}.sh{{ end }}
+        strip_parent: true
     # Use standard archive names that are broadly compatible
     name_template: >-
       {{ .ProjectName }}_

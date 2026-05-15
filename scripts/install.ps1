@@ -4,14 +4,38 @@ param(
 )
 
 $Repo = "edgar-elian-rodriguez/aws-creds-tool"
+$arch = if ($env:PROCESSOR_ARCHITECTURE -eq "AMD64") { "x86_64" } elseif ($env:PROCESSOR_ARCHITECTURE -eq "ARM64") { "arm64" } else { "x86_64" }
+$asset = "aws-creds-tool_Windows_$arch.zip"
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$bundledBinary = Join-Path $scriptDir "aws-creds-tool.exe"
+
+function Install-Binary {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$SourcePath
+    )
+
+    if (-not (Test-Path -Path $InstallDir)) {
+        New-Item -ItemType Directory -Path $InstallDir -Force | Out-Null
+    }
+
+    Copy-Item -Path $SourcePath -Destination "$InstallDir\aws-creds-tool.exe" -Force
+    Write-Host "Installed aws-creds-tool to $InstallDir\aws-creds-tool.exe"
+    Write-Host "If $InstallDir is not on your PATH, add it and reopen your shell."
+}
+
+if (Test-Path -Path $bundledBinary) {
+    Write-Host "Using bundled binary from extracted release package"
+    Install-Binary -SourcePath $bundledBinary
+    return
+}
+
 if ($Version -eq "latest") {
     $DownloadBase = "https://github.com/$Repo/releases/latest/download"
 } else {
     $DownloadBase = "https://github.com/$Repo/releases/download/$Version"
 }
 
-$arch = if ($env:PROCESSOR_ARCHITECTURE -eq "AMD64") { "x86_64" } elseif ($env:PROCESSOR_ARCHITECTURE -eq "ARM64") { "arm64" } else { "x86_64" }
-$asset = "aws-creds-tool_Windows_$arch.zip"
 $assetUrl = "$DownloadBase/$asset"
 $checksumUrl = "$DownloadBase/checksums.txt"
 
@@ -36,18 +60,12 @@ try {
     Write-Host "Extracting $asset"
     Expand-Archive -Path "$tmp\$asset" -DestinationPath "$tmp\extract" -Force
 
-    $binary = Get-ChildItem -Path "$tmp\extract" -Filter aws-creds-tool -Recurse | Select-Object -First 1
+    $binary = Get-ChildItem -Path "$tmp\extract" -Filter aws-creds-tool.exe -Recurse | Select-Object -First 1
     if (-not $binary) {
         throw "Binary not found in archive"
     }
 
-    if (-not (Test-Path -Path $InstallDir)) {
-        New-Item -ItemType Directory -Path $InstallDir -Force | Out-Null
-    }
-
-    Copy-Item -Path $binary.FullName -Destination "$InstallDir\aws-creds-tool.exe" -Force
-    Write-Host "Installed aws-creds-tool to $InstallDir\aws-creds-tool.exe"
-    Write-Host "If $InstallDir is not on your PATH, add it and reopen your shell."
+    Install-Binary -SourcePath $binary.FullName
 } finally {
     Remove-Item -Recurse -Force -Path $tmp
 }
