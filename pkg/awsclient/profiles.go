@@ -13,6 +13,12 @@ type Profile struct {
 	Name string
 }
 
+func ensureAwsDir() error {
+	credentialsPath, _ := GetProfileFiles()
+	dir := filepath.Dir(credentialsPath)
+	return os.MkdirAll(dir, 0700)
+}
+
 // GetProfileFiles returns the paths to the AWS credentials and config files.
 func GetProfileFiles() (string, string) {
 	home, _ := os.UserHomeDir()
@@ -60,7 +66,10 @@ func ListProfiles() ([]string, error) {
 // UpdateCredentials updates the ~/.aws/credentials file with new temporary credentials.
 func UpdateCredentials(profileName string, accessKey, secretKey, sessionToken string) error {
 	credentialsPath, _ := GetProfileFiles()
-	
+	if err := ensureAwsDir(); err != nil {
+		return fmt.Errorf("failed to create AWS config directory: %w", err)
+	}
+
 	cfg, err := ini.Load(credentialsPath)
 	if err != nil {
 		if os.IsNotExist(err) {
@@ -78,6 +87,60 @@ func UpdateCredentials(profileName string, accessKey, secretKey, sessionToken st
 	err = cfg.SaveTo(credentialsPath)
 	if err != nil {
 		return fmt.Errorf("failed to save credentials file: %w", err)
+	}
+
+	return nil
+}
+
+// CreateProfile creates a new local AWS profile in both credentials and config files.
+func CreateProfile(profileName, accessKey, secretKey, region, output string) error {
+	credentialsPath, configPath := GetProfileFiles()
+	if err := ensureAwsDir(); err != nil {
+		return fmt.Errorf("failed to create AWS config directory: %w", err)
+	}
+
+	cfg, err := ini.Load(credentialsPath)
+	if err != nil {
+		if os.IsNotExist(err) {
+			cfg = ini.Empty()
+		} else {
+			return fmt.Errorf("failed to load credentials file: %w", err)
+		}
+	}
+
+	credentialsSection := cfg.Section(profileName)
+	credentialsSection.Key("aws_access_key_id").SetValue(accessKey)
+	credentialsSection.Key("aws_secret_access_key").SetValue(secretKey)
+
+	err = cfg.SaveTo(credentialsPath)
+	if err != nil {
+		return fmt.Errorf("failed to save credentials file: %w", err)
+	}
+
+	cfg, err = ini.Load(configPath)
+	if err != nil {
+		if os.IsNotExist(err) {
+			cfg = ini.Empty()
+		} else {
+			return fmt.Errorf("failed to load config file: %w", err)
+		}
+	}
+
+	sectionName := profileName
+	if profileName != "default" {
+		sectionName = fmt.Sprintf("profile %s", profileName)
+	}
+
+	configSection := cfg.Section(sectionName)
+	configSection.Key("region").SetValue(region)
+	if output == "" {
+		output = "json"
+	}
+	configSection.Key("output").SetValue(output)
+
+	err = cfg.SaveTo(configPath)
+	if err != nil {
+		return fmt.Errorf("failed to save config file: %w", err)
 	}
 
 	return nil

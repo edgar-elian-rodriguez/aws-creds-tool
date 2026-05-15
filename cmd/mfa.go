@@ -28,9 +28,26 @@ var mfaCmd = &cobra.Command{
 			if err != nil {
 				log.Fatalf("Failed to list profiles: %v", err)
 			}
-			sourceProfile, err = ux.SelectProfile(profiles)
-			if err != nil {
-				log.Fatalf("Profile selection failed: %v", err)
+
+			if len(profiles) == 0 {
+				onboard, err := ux.ConfirmOnboard()
+				if err != nil {
+					log.Fatalf("Onboarding prompt failed: %v", err)
+				}
+
+				if onboard {
+					sourceProfile, err = runOnboard()
+					if err != nil {
+						log.Fatalf("Onboarding failed: %v", err)
+					}
+				} else {
+					log.Fatal("No AWS profiles found. Aborting. Run 'aws-creds-tool onboard' to create one.")
+				}
+			} else {
+				sourceProfile, err = ux.SelectProfile(profiles)
+				if err != nil {
+					log.Fatalf("Profile selection failed: %v", err)
+				}
 			}
 		}
 

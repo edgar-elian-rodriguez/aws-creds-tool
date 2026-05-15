@@ -91,6 +91,15 @@ Once installed, you can call the tool from your command shell:
 aws-creds-tool --help
 ```
 
+### Onboarding a new AWS profile
+If you do not have any AWS profiles configured locally, create one with:
+```bash
+aws-creds-tool onboard
+```
+The command prompts for a profile name, AWS access key ID, secret access key, default region, and output format, then writes the profile to both `~/.aws/credentials` and `~/.aws/config`.
+
+If `aws-creds-tool mfa` runs and no AWS profiles are found, it will ask whether you want to onboard a new profile and will launch the onboard flow automatically if you choose Yes.
+
 ## Contributing
 Please feel free to open issues or submit pull requests.
 
