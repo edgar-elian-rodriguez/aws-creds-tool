@@ -4,7 +4,8 @@ before:
   hooks:
     - go mod tidy
 builds:
-  - env:
+  - id: aws-creds-tool
+    env:
       - CGO_ENABLED=0
     goos:
       - linux
@@ -17,7 +18,8 @@ builds:
     binary: aws-creds-tool
 
 archives:
-  - format: tar.gz
+  - formats:
+      - tar.gz
     # Use standard archive names that are broadly compatible
     name_template: >-
       {{ .ProjectName }}_
@@ -29,40 +31,39 @@ archives:
     # use zip for windows archives
     format_overrides:
       - goos: windows
-        format: zip
+        formats:
+          - zip
 
 nfpms:
   - id: aws-creds-tool-deb
-    packager: deb
     formats:
       - deb
-    name: aws-creds-tool
+    package_name: aws-creds-tool
     license: MIT
     homepage: https://github.com/edgar-elian-rodriguez/aws-creds-tool
     description: "AWS Credential Administrator"
     maintainer: "edgar-elian-rodriguez"
     vendor: "edgar-elian-rodriguez"
     section: utils
-    builds:
+    ids:
       - aws-creds-tool
   - id: aws-creds-tool-rpm
-    packager: rpm
     formats:
       - rpm
-    name: aws-creds-tool
+    package_name: aws-creds-tool
     license: MIT
     homepage: https://github.com/edgar-elian-rodriguez/aws-creds-tool
     description: "AWS Credential Administrator"
     maintainer: "edgar-elian-rodriguez"
     vendor: "edgar-elian-rodriguez"
-    builds:
+    ids:
       - aws-creds-tool
 
 checksum:
   name_template: 'checksums.txt'
 
 snapshot:
-  name_template: "{{ incpatch .Version }}-next"
+  version_template: "{{ incpatch .Version }}-next"
 
 changelog:
   sort: asc
